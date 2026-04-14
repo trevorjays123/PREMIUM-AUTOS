@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory - Premium Auto Motors Nigeria</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        .car-card:hover {
+            transform: translateY(-8px);
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
 
-<!-- Navigation (same as homepage) -->
 <nav class="bg-white shadow-lg fixed w-full z-50 top-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -23,65 +27,81 @@
                 <a href="/new-arrivals.html" class="text-gray-700 hover:text-blue-600 font-medium">New Arrivals</a>
                 <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
             </div>
-            <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-                Call Us
-            </button>
         </div>
     </div>
 </nav>
 
-<!-- Inventory Header -->
 <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white pt-24 pb-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl font-bold mb-4">Our Vehicle Inventory</h1>
-        <p class="text-xl">Browse through our extensive collection of premium vehicles available in Nigeria</p>
+        <p class="text-xl">Browse through our extensive collection of premium vehicles</p>
     </div>
 </section>
 
-<!-- Filters -->
-<section class="py-8 bg-white shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-wrap gap-4 justify-center">
-            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>All Conditions</option>
-                <option>Brand New</option>
-                <option>Foreign Used</option>
-                <option>Nigerian Used</option>
-            </select>
-            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>All Makes</option>
-                <option>Toyota</option>
-                <option>Lexus</option>
-                <option>Changan</option>
-                <option>Innoson</option>
-            </select>
-            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Price Range</option>
-                <option>₦0 - ₦10M</option>
-                <option>₦10M - ₦50M</option>
-                <option>₦50M - ₦100M</option>
-                <option>₦100M+</option>
-            </select>
-            <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-                Apply Filters
-            </button>
-        </div>
-    </div>
-</section>
-
-<!-- Inventory Grid -->
 <section class="py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="inventory-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Cars loaded dynamically -->
+            <div class="col-span-3 text-center py-8">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <p class="mt-2">Loading inventory...</p>
+            </div>
         </div>
     </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script src="/js/main.js"></script>
 <script>
-    AOS.init();
+    async function loadInventory() {
+        try {
+            const response = await fetch('/api/cars');
+            const cars = await response.json();
+            const container = document.getElementById('inventory-grid');
+            
+            if (cars.length === 0) {
+                container.innerHTML = '<div class="col-span-3 text-center">No cars available</div>';
+                return;
+            }
+            
+            container.innerHTML = cars.map(car => `
+                <div class="car-card bg-white rounded-xl shadow-lg overflow-hidden transition duration-300">
+                    <img src="${car.image}" alt="${car.name}" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-900">${car.name} ${car.year}</h3>
+                            <span class="bg-${car.condition === 'Brand New' ? 'green' : 'orange'}-100 text-${car.condition === 'Brand New' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded">${car.condition}</span>
+                        </div>
+                        <p class="text-2xl font-bold text-blue-600 mb-2">${car.priceNaira}</p>
+                        <div class="flex justify-between text-gray-600 mb-4">
+                            <span>📅 ${car.year}</span>
+                            <span>⚙️ ${car.transmission}</span>
+                            <span>📊 ${car.mileage > 0 ? car.mileage.toLocaleString() + ' km' : '0 km'}</span>
+                        </div>
+                        <button onclick="sendInquiry('${car.name}')" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
+                            📱 Inquire on WhatsApp
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('inventory-grid').innerHTML = '<div class="col-span-3 text-center text-red-600">Error loading cars. Please try again.</div>';
+        }
+    }
+    
+    async function sendInquiry(carName) {
+        const name = prompt('Your name:');
+        const phone = prompt('Your phone:');
+        if (name && phone) {
+            const response = await fetch('/api/inquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, phone, carName, message: '' })
+            });
+            const data = await response.json();
+            window.open(data.whatsappUrl, '_blank');
+        }
+    }
+    
+    loadInventory();
 </script>
 </body>
 </html>
