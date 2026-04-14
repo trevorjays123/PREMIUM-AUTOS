@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory - Premium Auto Motors Nigeria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation (same as homepage) -->
+<nav class="bg-white shadow-lg fixed w-full z-50 top-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <span class="text-2xl font-bold text-blue-600">Premium Auto</span>
+                <span class="text-sm text-gray-500 ml-2">Motors Nigeria</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="/inventory.html" class="text-blue-600 font-medium">Inventory</a>
+                <a href="/new-arrivals.html" class="text-gray-700 hover:text-blue-600 font-medium">New Arrivals</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+            </div>
+            <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                Call Us
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Inventory Header -->
+<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white pt-24 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl font-bold mb-4">Our Vehicle Inventory</h1>
+        <p class="text-xl">Browse through our extensive collection of premium vehicles available in Nigeria</p>
+    </div>
+</section>
+
+<!-- Filters -->
+<section class="py-8 bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-4 justify-center">
+            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option>All Conditions</option>
+                <option>Brand New</option>
+                <option>Foreign Used</option>
+                <option>Nigerian Used</option>
+            </select>
+            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option>All Makes</option>
+                <option>Toyota</option>
+                <option>Lexus</option>
+                <option>Changan</option>
+                <option>Innoson</option>
+            </select>
+            <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option>Price Range</option>
+                <option>₦0 - ₦10M</option>
+                <option>₦10M - ₦50M</option>
+                <option>₦50M - ₦100M</option>
+                <option>₦100M+</option>
+            </select>
+            <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                Apply Filters
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Inventory Grid -->
+<section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="inventory-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Cars loaded dynamically -->
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="/js/main.js"></script>
+<script>
+    AOS.init();
+</script>
+</body>
+</html>
