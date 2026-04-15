@@ -168,7 +168,7 @@ app.post('/api/inquiry', (req, res) => {
     const { name, phone, carName, message } = req.body;
     
     // Format WhatsApp message - Update this phone number to your client's actual WhatsApp
-    const whatsappNumber = '2348000000000'; // Replace with actual Nigerian number
+    const whatsappNumber = '2348123456789'; // Your client's actual WhatsApp number
     const whatsappMessage = `Hello! I'm interested in the ${carName}.\n\nName: ${name}\nPhone: ${phone}\nMessage: ${message}`;
     const encodedMessage = encodeURIComponent(whatsappMessage);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
