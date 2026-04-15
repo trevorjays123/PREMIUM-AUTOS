@@ -6,14 +6,19 @@
     <title>Inventory - Premium Auto Motors Nigeria</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        .car-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
         .car-card:hover {
-            transform: translateY(-8px);
-            transition: all 0.3s ease;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body class="bg-gray-50">
 
+<!-- Navigation -->
 <nav class="bg-white shadow-lg fixed w-full z-50 top-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -25,83 +30,356 @@
                 <a href="/" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
                 <a href="/inventory.html" class="text-blue-600 font-medium">Inventory</a>
                 <a href="/new-arrivals.html" class="text-gray-700 hover:text-blue-600 font-medium">New Arrivals</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
             </div>
+            <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                📞 Call Us
+            </button>
         </div>
     </div>
 </nav>
 
+<!-- Header -->
 <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white pt-24 pb-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl font-bold mb-4">Our Vehicle Inventory</h1>
-        <p class="text-xl">Browse through our extensive collection of premium vehicles</p>
+        <p class="text-xl">Browse through our extensive collection of premium vehicles in Nigeria</p>
     </div>
 </section>
 
+<!-- Filter Section -->
+<section class="py-6 bg-white border-b shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-4 justify-center">
+            <select id="filter-condition" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Filter by vehicle condition">
+                <option value="all">All Conditions</option>
+                <option value="Brand New">Brand New</option>
+                <option value="Foreign Used">Foreign Used (Tokunbo)</option>
+            </select>
+            <select id="filter-make" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Filter by vehicle make">
+                <option value="all">All Makes</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Lexus">Lexus</option>
+                <option value="Changan">Changan</option>
+                <option value="Innoson">Innoson</option>
+            </select>
+            <select id="filter-price" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Filter by price range">
+                <option value="all">All Prices</option>
+                <option value="0-10000000">Under ₦10 Million</option>
+                <option value="10000000-50000000">₦10M - ₦50M</option>
+                <option value="50000000-100000000">₦50M - ₦100M</option>
+                <option value="100000000+">₦100M+</option>
+            </select>
+            <button id="apply-filters" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                Apply Filters
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Inventory Grid -->
 <section class="py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="inventory-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="col-span-3 text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <p class="mt-2">Loading inventory...</p>
+            <div class="col-span-3 text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+                <p class="mt-3 text-gray-600">Loading premium vehicles...</p>
             </div>
         </div>
     </div>
 </section>
 
-<script>
-    async function loadInventory() {
-        try {
-            const response = await fetch('/api/cars');
-            const cars = await response.json();
-            const container = document.getElementById('inventory-grid');
-            
-            if (cars.length === 0) {
-                container.innerHTML = '<div class="col-span-3 text-center">No cars available</div>';
-                return;
-            }
-            
-            container.innerHTML = cars.map(car => `
-                <div class="car-card bg-white rounded-xl shadow-lg overflow-hidden transition duration-300">
-                    <img src="${car.image}" alt="${car.name}" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-900">${car.name} ${car.year}</h3>
-                            <span class="bg-${car.condition === 'Brand New' ? 'green' : 'orange'}-100 text-${car.condition === 'Brand New' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded">${car.condition}</span>
+<!-- Contact Section -->
+<section id="contact" class="py-16 bg-gradient-to-r from-green-50 to-blue-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Interested in Any Vehicle?</h2>
+            <p class="text-xl text-gray-600">Contact us directly on WhatsApp for:</p>
+            <div class="flex justify-center gap-8 mt-4 flex-wrap">
+                <span class="inline-flex items-center text-gray-700">✓ Test Drive Arrangements</span>
+                <span class="inline-flex items-center text-gray-700">✓ Best Price Quotes</span>
+                <span class="inline-flex items-center text-gray-700">✓ Financing Options</span>
+                <span class="inline-flex items-center text-gray-700">✓ Vehicle Inspection</span>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="grid md:grid-cols-2">
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Send Us a Message</h3>
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label for="contact-name" class="block text-gray-700 font-medium mb-2">Your Full Name *</label>
+                            <input type="text" id="contact-name" required 
+                                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                         </div>
-                        <p class="text-2xl font-bold text-blue-600 mb-2">${car.priceNaira}</p>
-                        <div class="flex justify-between text-gray-600 mb-4">
-                            <span>📅 ${car.year}</span>
-                            <span>⚙️ ${car.transmission}</span>
-                            <span>📊 ${car.mileage > 0 ? car.mileage.toLocaleString() + ' km' : '0 km'}</span>
+                        <div>
+                            <label for="contact-phone" class="block text-gray-700 font-medium mb-2">Phone Number with Country Code *</label>
+                            <input type="tel" id="contact-phone" required 
+                                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                         </div>
-                        <button onclick="sendInquiry('${car.name}')" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
-                            📱 Inquire on WhatsApp
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Car Interested In (Optional)</label>
+                            <input type="text" id="contact-car" placeholder="e.g., Toyota Camry 2026" 
+                                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Message</label>
+                            <textarea id="contact-message" rows="3" 
+                                      placeholder="I'm interested in learning more about your vehicles..." 
+                                      class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                        </div>
+                        <button type="submit" 
+                                class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition flex items-center justify-center gap-2 text-lg font-semibold">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.032 2.018c-5.525 0-10 4.475-10 10 0 1.733.444 3.367 1.222 4.793L2.02 22.002l5.315-1.143c1.35.687 2.872 1.058 4.455 1.058 5.525 0 10-4.475 10-10s-4.475-10-10-10z"/>
+                            </svg>
+                            Send WhatsApp Message
                         </button>
+                    </form>
+                </div>
+                <div class="bg-green-600 p-8 text-white flex flex-col justify-center">
+                    <div class="text-center">
+                        <svg class="w-20 h-20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.032 2.018c-5.525 0-10 4.475-10 10 0 1.733.444 3.367 1.222 4.793L2.02 22.002l5.315-1.143c1.35.687 2.872 1.058 4.455 1.058 5.525 0 10-4.475 10-10s-4.475-10-10-10z"/>
+                        </svg>
+                        <h3 class="text-2xl font-bold mb-2">Quick Response</h3>
+                        <p class="mb-4">Our team typically responds within 15 minutes</p>
+                        <div class="border-t border-green-500 pt-4 mt-4">
+                            <p class="font-semibold">📞 Call Directly:</p>
+                            <p class="text-xl">+234 812 345 6789</p>
+                        </div>
                     </div>
                 </div>
-            `).join('');
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('inventory-grid').innerHTML = '<div class="col-span-3 text-center text-red-600">Error loading cars. Please try again.</div>';
+            </div>
+        </div>
+        
+        <!-- Direct WhatsApp Link -->
+        <div class="text-center mt-8">
+            <a href="https://wa.me/2348123456789" target="_blank" rel="noopener noreferrer nofollow" aria-label="Contact us on WhatsApp"
+               class="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition shadow-lg">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.032 2.018c-5.525 0-10 4.475-10 10 0 1.733.444 3.367 1.222 4.793L2.02 22.002l5.315-1.143c1.35.687 2.872 1.058 4.455 1.058 5.525 0 10-4.475 10-10s-4.475-10-10-10z"/>
+                </svg>
+                Or Chat Directly on WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p>&copy; 2026 Premium Auto Motors Nigeria. All rights reserved.</p>
+        <p class="text-gray-400 text-sm mt-2">📍 Lagos, Nigeria | 📞 24/7 Customer Support</p>
+    </div>
+</footer>
+
+<script>
+    // Complete car data
+    const carsData = [
+        {
+            id: 1,
+            name: 'Toyota Corolla',
+            year: 2026,
+            priceNaira: '₦50,000,000',
+            priceValue: 50000000,
+            condition: 'Brand New',
+            transmission: 'Automatic',
+            mileage: 0,
+            fuelType: 'Petrol',
+            color: 'Pearl White',
+            make: 'Toyota',
+            image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&h=400&fit=crop',
+            description: 'The all-new 2026 Toyota Corolla combines fuel efficiency with modern styling.'
+        },
+        {
+            id: 2,
+            name: 'Toyota Camry',
+            year: 2026,
+            priceNaira: '₦68,000,000',
+            priceValue: 68000000,
+            condition: 'Brand New',
+            transmission: 'Automatic',
+            mileage: 0,
+            fuelType: 'Petrol',
+            color: 'Midnight Black',
+            make: 'Toyota',
+            image: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=600&h=400&fit=crop',
+            description: 'Luxury sedan with premium features. Ideal for executives and families.'
+        },
+        {
+            id: 3,
+            name: 'Toyota Hilux',
+            year: 2026,
+            priceNaira: '₦95,000,000',
+            priceValue: 95000000,
+            condition: 'Brand New',
+            transmission: 'Automatic',
+            mileage: 0,
+            fuelType: 'Diesel',
+            color: 'Army Green',
+            make: 'Toyota',
+            image: 'https://images.unsplash.com/photo-1466721591366-2d5fba72006d?w=600&h=400&fit=crop',
+            description: 'Built for Nigerian terrain. The ultimate workhorse with luxury interior.'
+        },
+        {
+            id: 4,
+            name: 'Lexus RX 350',
+            year: 2026,
+            priceNaira: '₦195,000,000',
+            priceValue: 195000000,
+            condition: 'Brand New',
+            transmission: 'Automatic',
+            mileage: 0,
+            fuelType: 'Petrol',
+            color: 'Silver',
+            make: 'Lexus',
+            image: 'https://images.unsplash.com/photo-1533473359331-fd322f7a7f78?w=600&h=400&fit=crop',
+            description: 'Premium luxury SUV with advanced safety features and stunning design.'
+        },
+        {
+            id: 5,
+            name: 'Toyota Land Cruiser LC300',
+            year: 2026,
+            priceNaira: '₦250,000,000',
+            priceValue: 250000000,
+            condition: 'Brand New',
+            transmission: 'Automatic',
+            mileage: 0,
+            fuelType: 'Diesel',
+            color: 'Black',
+            make: 'Toyota',
+            image: 'https://images.unsplash.com/photo-1533473359331-fd322f7a7f78?w=600&h=400&fit=crop',
+            description: 'The king of Nigerian roads. Ultimate luxury off-road capability.'
+        },
+        {
+            id: 6,
+            name: 'Changan CS55',
+            year: 2026,
+            priceNaira: '₦23,500,000',
+            priceValue: 23500000,
+            condition: 'Brand New',
+            transmission: 'Automatic',
+            mileage: 0,
+            fuelType: 'Petrol',
+            color: 'Red',
+            make: 'Changan',
+            image: 'https://images.unsplash.com/photo-1533473359331-fd322f7a7f78?w=600&h=400&fit=crop',
+            description: 'Locally assembled in Nigeria. Great value for money SUV.'
+        },
+        {
+            id: 7,
+            name: 'Innoson IVM G6',
+            year: 2026,
+            priceNaira: '₦18,000,000',
+            priceValue: 18000000,
+            condition: 'Brand New',
+            transmission: 'Manual',
+            mileage: 0,
+            fuelType: 'Petrol',
+            color: 'White',
+            make: 'Innoson',
+            image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600&h=400&fit=crop',
+            description: 'Proudly Nigerian manufactured. Support local industry.'
         }
-    }
-    
-    async function sendInquiry(carName) {
-        const name = prompt('Your name:');
-        const phone = prompt('Your phone:');
-        if (name && phone) {
-            const response = await fetch('/api/inquiry', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, phone, carName, message: '' })
-            });
-            const data = await response.json();
-            window.open(data.whatsappUrl, '_blank');
+    ];
+
+    function displayCars(cars) {
+        const container = document.getElementById('inventory-grid');
+        
+        if (!cars || cars.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-3 text-center py-12">
+                    <p class="text-gray-500 text-lg">No cars match your filters</p>
+                    <button onclick="displayCars(carsData)" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                        Reset Filters
+                    </button>
+                </div>
+            `;
+            return;
         }
+        
+        container.innerHTML = cars.map(car => `
+            <div class="car-card bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="relative h-56 overflow-hidden">
+                    <img src="${car.image}" 
+                         alt="${car.name}" 
+                         class="w-full h-full object-cover"
+                         onerror="this.src='https://via.placeholder.com/600x400?text=Premium+Auto+Motors'">
+                    ${car.condition === 'Brand New' ? '<span class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">NEW 2026</span>' : ''}
+                </div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold text-gray-900">${car.name} ${car.year}</h3>
+                        <span class="bg-${car.condition === 'Brand New' ? 'green' : 'orange'}-100 text-${car.condition === 'Brand New' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded font-semibold">${car.condition}</span>
+                    </div>
+                    
+                    <p class="text-2xl font-bold text-blue-600 mb-3">${car.priceNaira}</p>
+                    
+                    <div class="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-3">
+                        <div>📅 ${car.year}</div>
+                        <div>⚙️ ${car.transmission}</div>
+                        <div>⛽ ${car.fuelType}</div>
+                        <div>📊 ${car.mileage > 0 ? car.mileage.toLocaleString() + ' km' : '0 km'}</div>
+                        <div>🎨 ${car.color}</div>
+                    </div>
+                    
+                    <p class="text-gray-500 text-sm">${car.description}</p>
+                </div>
+            </div>
+        `).join('');
     }
-    
-    loadInventory();
+
+    function filterCars() {
+        const condition = document.getElementById('filter-condition').value;
+        const make = document.getElementById('filter-make').value;
+        const priceRange = document.getElementById('filter-price').value;
+        
+        let filtered = [...carsData];
+        
+        if (condition !== 'all') {
+            filtered = filtered.filter(car => car.condition === condition);
+        }
+        
+        if (make !== 'all') {
+            filtered = filtered.filter(car => car.make === make);
+        }
+        
+        if (priceRange !== 'all') {
+            if (priceRange === '100000000+') {
+                filtered = filtered.filter(car => car.priceValue >= 100000000);
+            } else {
+                const [min, max] = priceRange.split('-');
+                filtered = filtered.filter(car => car.priceValue >= parseInt(min) && car.priceValue <= parseInt(max));
+            }
+        }
+        
+        displayCars(filtered);
+    }
+
+    // Event listeners
+    document.getElementById('apply-filters').addEventListener('click', filterCars);
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = {
+            name: document.getElementById('contact-name').value,
+            phone: document.getElementById('contact-phone').value,
+            car: document.getElementById('contact-car').value || 'Not specified',
+            message: document.getElementById('contact-message').value || 'Customer inquiry'
+        };
+        const whatsappUrl = `https://wa.me/2348123456789?text=${encodeURIComponent(
+            `New Inquiry from ${formData.name}\n\n` +
+            `Phone: ${formData.phone}\n` +
+            `Car: ${formData.car}\n\n` +
+            `Message: ${formData.message}`
+        )}`;
+        window.open(whatsappUrl, '_blank');
+        e.target.reset();
+    });
+
+    // Initial display
+    document.addEventListener('DOMContentLoaded', () => displayCars(carsData));
 </script>
 </body>
 </html>
