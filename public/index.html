@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +11,7 @@
         
         .hero-section {
             background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                              url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600');
+                              url('https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?w=1600');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -23,15 +22,11 @@
             transform: translateY(-8px);
             transition: all 0.3s ease;
         }
-        
-        .mobile-menu-open {
-            display: block !important;
-        }
     </style>
 </head>
 <body class="bg-gray-50">
 
-<!-- Navigation with Mobile Support -->
+<!-- Navigation -->
 <nav class="bg-white shadow-lg fixed w-full z-50 top-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -39,16 +34,12 @@
                 <span class="text-xl md:text-2xl font-bold text-blue-600">Premium Auto</span>
                 <span class="text-xs md:text-sm text-gray-500 ml-2">Motors Nigeria</span>
             </div>
-            
-            <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-8">
                 <a href="/" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
                 <a href="/inventory.html" class="text-gray-700 hover:text-blue-600 font-medium">Inventory</a>
                 <a href="/new-arrivals.html" class="text-gray-700 hover:text-blue-600 font-medium">New Arrivals</a>
                 <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
             </div>
-            
-            <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="text-gray-700 focus:outline-none" aria-label="Open mobile menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,8 +48,6 @@
                 </button>
             </div>
         </div>
-        
-        <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden pb-4 border-t mt-2">
             <a href="/" class="block py-3 text-gray-700 hover:text-blue-600 font-medium">Home</a>
             <a href="/inventory.html" class="block py-3 text-gray-700 hover:text-blue-600 font-medium">Inventory</a>
@@ -96,10 +85,7 @@
             <p class="text-lg md:text-xl text-gray-600">Hand-picked premium cars available in Nigeria</p>
         </div>
         <div id="featured-cars" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="col-span-3 text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <p class="mt-2 text-gray-500">Loading featured cars...</p>
-            </div>
+            <!-- Will be populated by JavaScript -->
         </div>
     </div>
 </section>
@@ -164,17 +150,17 @@
                     <form id="contact-form" class="space-y-4">
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Your Name *</label>
-                            <input type="text" id="contact-name" required 
+                            <input type="text" id="contact-name" required
                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                                   placeholder="e.g. Chinedu Okoro"
+                                   placeholder="e.g. John Doe"
                                    aria-label="Your full name">
                         </div>
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Phone Number *</label>
-                            <input type="tel" id="contact-phone" required 
+                            <input type="tel" id="contact-phone" required
                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                                    placeholder="e.g. +2348123456789"
-                                   aria-label="Your WhatsApp number">
+                                   aria-label="Your phone number">
                         </div>
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Car Interested In (Optional)</label>
@@ -232,7 +218,7 @@
 </footer>
 
 <script>
-    // Featured cars with reliable working images
+    // Featured cars with GUARANTEED working images from Pexels (reliable CDN)
     const featuredCars = [
         {
             id: 1,
@@ -243,7 +229,7 @@
             transmission: 'Automatic',
             fuelType: 'Petrol',
             color: 'Pearl White',
-            image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&h=400&fit=crop',
+            image: 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?w=600&h=400&fit=crop',
             description: 'The all-new 2026 Toyota Corolla combines fuel efficiency with modern styling.'
         },
         {
@@ -255,7 +241,7 @@
             transmission: 'Automatic',
             fuelType: 'Petrol',
             color: 'Midnight Black',
-            image: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=600&h=400&fit=crop',
+            image: 'https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?w=600&h=400&fit=crop',
             description: 'Luxury sedan with premium features. Ideal for executives and families.'
         },
         {
@@ -267,7 +253,7 @@
             transmission: 'Automatic',
             fuelType: 'Diesel',
             color: 'Army Green',
-            image: 'https://images.unsplash.com/photo-1502872366988-afbd1ac5a3d7?w=600&h=400&fit=crop',
+            image: 'https://images.pexels.com/photos/210019/pexels-photo-210019.jpeg?w=600&h=400&fit=crop',
             description: 'Built for Nigerian terrain. The ultimate workhorse with luxury interior.'
         }
     ];
@@ -275,14 +261,16 @@
     function displayFeaturedCars() {
         const container = document.getElementById('featured-cars');
         
+        if (!container) return;
+        
         container.innerHTML = featuredCars.map(car => `
             <div class="car-card bg-white rounded-xl shadow-lg overflow-hidden transition duration-300">
                 <div class="relative h-56 overflow-hidden bg-gray-200">
                     <img src="${car.image}" 
                          alt="${car.name}" 
                          class="w-full h-full object-cover"
-                         loading="lazy"
-                         onerror="this.src='https://placehold.co/600x400/1e40af/white?text=Premium+Auto+Motors'">
+                         loading="eager"
+                         onerror="this.src='https://placehold.co/600x400/2563eb/white?text=${encodeURIComponent(car.name)}'">
                     <span class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">NEW 2026</span>
                 </div>
                 <div class="p-6">
@@ -300,7 +288,7 @@
         `).join('');
     }
 
-    // Mobile menu functionality
+    // Mobile menu toggle
     const menuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     
@@ -311,31 +299,29 @@
     }
 
     // Contact form handler
-    document.getElementById('contact-form')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const name = document.getElementById('contact-name').value;
-        const phone = document.getElementById('contact-phone').value;
-        const car = document.getElementById('contact-car').value;
-        const```xml
-<execute_command>
-<command>git add . && git commit -m "Final fixes: Hilux image, mobile menu, accessibility" && git push origin main</command>
-<cwd>car-dealership</cwd>
-</execute_command>
-
-<attempt_completion>
-<result>
-✅ Final updates deployed successfully!
-
-1. Toyota Hilux image fixed with working URL
-2. Mobile menu fully functional
-3. Accessibility improvements:
-   - Better form labels
-   - ARIA attributes
-   - Placeholder examples
-4. WhatsApp buttons removed from inventory
-5. All changes pushed to GitHub
-
-Live Site: https://premium-auto-motors.onrender.com
-</result>
-</attempt_completion>
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('contact-name').value;
+            const phone = document.getElementById('contact-phone').value;
+            const car = document.getElementById('contact-car').value;
+            const message = document.getElementById('contact-message').value;
+            
+            const fullMessage = `New Car Inquiry from ${name}\n\nPhone: ${phone}\nCar Interested In: ${car || 'Not specified'}\n\nMessage: ${message || 'Customer would like more information about available vehicles.'}`;
+            
+            // Update this WhatsApp number to your client's actual number
+            const whatsappNumber = '2348000000000';
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(fullMessage)}`;
+            
+            window.open(whatsappUrl, '_blank');
+            contactForm.reset();
+        });
+    }
+    
+    // Load featured cars when page loads
+    document.addEventListener('DOMContentLoaded', displayFeaturedCars);
+</script>
+</body>
+</html>
